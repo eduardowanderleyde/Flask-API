@@ -24,4 +24,8 @@ def create_app(config_name='development'):
     from app.routes import api_bp
     app.register_blueprint(api_bp, url_prefix='/api')
     
-    return app 
+    return app
+
+
+# Create app instance for gunicorn
+app = create_app() 
