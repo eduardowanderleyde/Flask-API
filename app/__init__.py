@@ -1,6 +1,8 @@
 from flask import Flask
 from flask_cors import CORS
+from flask_jwt_extended import JWTManager
 from config import config
+from app.models.user import db, bcrypt
 
 
 def create_app(config_name='development'):
@@ -10,6 +12,13 @@ def create_app(config_name='development'):
     
     # Initialize extensions
     CORS(app)
+    db.init_app(app)
+    bcrypt.init_app(app)
+    jwt = JWTManager(app)
+    
+    # Create database tables
+    with app.app_context():
+        db.create_all()
     
     # Register blueprints
     from app.routes import api_bp
