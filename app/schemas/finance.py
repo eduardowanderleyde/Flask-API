@@ -1,13 +1,13 @@
-from marshmallow import Schema, fields, validate, ValidationError
+from marshmallow import Schema, fields, validate
 from datetime import datetime
 
 
 class CategorySchema(Schema):
     """Schema for category validation."""
     id = fields.Int(dump_only=True)
-    name = fields.Str(required=True, validate=validate.Length(min=1, max=100))
+    name = fields.Str(required=True)
     description = fields.Str(allow_none=True)
-    color = fields.Str(validate=validate.Regexp(r'^#[0-9A-Fa-f]{6}$'), default="#3B82F6")
+    color = fields.Str(default="#3B82F6")
     icon = fields.Str(default="💰")
     user_id = fields.Int(dump_only=True)
     created_at = fields.DateTime(dump_only=True)
@@ -17,8 +17,8 @@ class CategorySchema(Schema):
 class TransactionSchema(Schema):
     """Schema for transaction validation."""
     id = fields.Int(dump_only=True)
-    description = fields.Str(required=True, validate=validate.Length(min=1, max=200))
-    amount = fields.Decimal(required=True, places=2, validate=validate.Range(min=0.01))
+    description = fields.Str(required=True)
+    amount = fields.Float(required=True)
     type = fields.Str(required=True, validate=validate.OneOf(['income', 'expense']))
     category_id = fields.Int(required=True)
     user_id = fields.Int(dump_only=True)
@@ -34,9 +34,9 @@ class TransactionSchema(Schema):
 class FinancialGoalSchema(Schema):
     """Schema for financial goal validation."""
     id = fields.Int(dump_only=True)
-    name = fields.Str(required=True, validate=validate.Length(min=1, max=200))
-    target_amount = fields.Decimal(required=True, places=2, validate=validate.Range(min=0.01))
-    current_amount = fields.Decimal(default=0, places=2)
+    name = fields.Str(required=True)
+    target_amount = fields.Float(required=True)
+    current_amount = fields.Float(default=0)
     deadline = fields.Date(allow_none=True)
     description = fields.Str(allow_none=True)
     user_id = fields.Int(dump_only=True)
