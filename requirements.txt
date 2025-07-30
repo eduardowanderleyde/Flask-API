@@ -9,4 +9,5 @@ marshmallow-sqlalchemy==0.29.0
 marshmallow==3.20.1
 python-dotenv==1.0.0
 bcrypt==4.0.1
+Flask-Bcrypt==1.0.1
 gunicorn==21.2.0 
